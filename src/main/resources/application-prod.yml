@@ -1,0 +1,25 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${eureka.client.service-url.credentials}@eureka-server:8761/eureka/
+  instance:
+    prefer-ip-address: false
+
+logging:
+  file:
+    name: /var/log/signaling/signaling.log
+  logback:
+    rolling policy:
+      max-file-size: 10MB
+      max-history: 30
+
+management:
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,prometheus
+    enabled-by-default: false

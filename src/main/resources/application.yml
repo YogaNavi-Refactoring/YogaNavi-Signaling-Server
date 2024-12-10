@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: signaling-service
+  profiles:
+    active: local
+  config:
+    import:
+      - classpath:application-secret.yml
+
+server:
+  port: 0
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 90
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+logging:
+  level:
+    com.yoganavi.signaling: DEBUG
+    org.springframework.web.socket: DEBUG
